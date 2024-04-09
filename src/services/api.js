@@ -1,5 +1,43 @@
 import axios from "axios";
 
-export const fetchImage = async () => {
-  const response = await axios.get("");
+axios.defaults.baseURL = "https://api.unsplash.com/";
+
+export const fetchImages = async (query, page) => {
+  const response = await axios.get("search/photos/", {
+    params: {
+      query,
+      page,
+      per_page: 10,
+      client_id: "fF4smEQdGwdsaSVAzGSHoukpDdVB9II8pe87g6f1gaE",
+    },
+  });
+  return response.data;
 };
+
+// axios.defaults.baseURL = "https://api.unsplash.com/";
+
+// export const fetchImages = async (query, page) => {
+//   const response = await axios.get("search/photos/", {
+//     params: {
+//       query,
+//       page,
+//       per_page: 10,
+//       client_id: "lEGsAyM8cAfNQ7QKi-pmBGxomlSFx3J0WPqkVwh1mCo",
+//     },
+//   });
+//   return response.data;
+// };
+
+// axios.defaults.baseURL = "https://api.unsplash.com/";
+
+// export async function fetchImages(query, page) {
+//   const params = {
+//     client_id: "lEGsAyM8cAfNQ7QKi-pmBGxomlSFx3J0WPqkVwh1mCo",
+//     query: query,
+//     page,
+//     per_page: 10,
+//   };
+//   const response = await axios.get("search/photos", { params });
+//   console.log(response);
+//   return response.data;
+// }
