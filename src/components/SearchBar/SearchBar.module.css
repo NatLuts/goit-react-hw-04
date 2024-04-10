@@ -1,0 +1,40 @@
+.header {
+  background-color: #3737dc99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  width: 100vw;
+  margin: 0 auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.input {
+  width: 300px;
+  border-radius: 6px;
+  border: 1px solid rgb(107, 14, 107);
+  padding: 8px;
+  padding-left: 12px;
+}
+
+.input::placeholder {
+  color: rgb(93, 44, 140);
+  font-size: 16px;
+}
+
+.btn {
+  width: 100px;
+  color: rgb(93, 44, 140);
+  border: 1px solid rgb(107, 14, 107);
+  cursor: pointer;
+}
+
+.btn:hover,
+input:hover {
+  border: 2px solid rgb(187, 120, 187);
+}

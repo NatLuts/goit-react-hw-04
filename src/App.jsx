@@ -1,28 +1,32 @@
 import { useEffect, useState } from "react";
 import { fetchImages } from "./services/api";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import SearchBar from "./components/SearchBar/SearchBar";
 import "./App.css";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import Loader from "./components/Loader/Loader";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 const App = () => {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const [items, SetItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [totalImages, setTotalImages] = useState(0);
 
   useEffect(() => {
+    if (!query) return;
     const getData = async () => {
       try {
         setIsLoading(true);
         setIsError(false);
         const response = await fetchImages(query, page);
-        if (!response.results.length) {
-          SetItems([]);
-          return;
-        }
-        console.log(response);
+        if (!response.results.length) return;
+        setItems(response.results);
+        setTotalImages(response.total);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -33,10 +37,34 @@ const App = () => {
     getData();
   }, [query, page]);
 
+  const handleLoadMore = () => {
+    setPage(page + 1);
+  };
+
+  const handleChangeQuery = (queryStr) => {
+    setQuery(queryStr);
+    setPage(0);
+    setItems([]);
+  };
+
+  const emptyField = () => {
+    toast.error("Field is empty..."),
+      {
+        duration: 3000,
+        position: "right",
+      };
+  };
+
   return (
     <div>
-      <SearchBar onSearch={setQuery} />
+      <SearchBar onSearch={handleChangeQuery} emptyField={emptyField} />
+      {isError && <ErrorMessage />}
+      <Toaster />
       <ImageGallery items={items} />
+      {isLoading && !isError && <Loader />}
+      {!isLoading && items.length < totalImages && (
+        <LoadMoreBtn handleLoadMore={handleLoadMore} />
+      )}
     </div>
   );
 };
