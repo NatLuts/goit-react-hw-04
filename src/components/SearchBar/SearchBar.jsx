@@ -1,11 +1,14 @@
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(e.target.elements.query.value);
+  };
   return (
     <header>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
-          autoComplete="off"
-          autoFocus
+          name="query"
           placeholder="Search images and photos"
         />
         <button type="submit">Search</button>
