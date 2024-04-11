@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { fetchImages } from "./services/api";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+
 import SearchBar from "./components/SearchBar/SearchBar";
 import "./App.css";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import ImageModal from "./components/ImageModal/ImageModal";
 
 const App = () => {
   const [page, setPage] = useState(1);
@@ -16,6 +17,8 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [totalImages, setTotalImages] = useState(0);
+  const [imgUrl, setImgUrl] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!query) return;
@@ -55,16 +58,24 @@ const App = () => {
       };
   };
 
+  const openModal = (imgUrl) => {
+    setIsOpen(true);
+    setImgUrl(imgUrl);
+  };
+
+  const closeModal = () => setIsOpen(false);
+
   return (
     <div>
       <SearchBar onSearch={handleChangeQuery} emptyField={emptyField} />
       {isError && <ErrorMessage />}
       <Toaster />
-      <ImageGallery items={items} />
+      <ImageGallery items={items} openModal={openModal} />
       {isLoading && !isError && <Loader />}
       {!isLoading && items.length < totalImages && (
         <LoadMoreBtn handleLoadMore={handleLoadMore} />
       )}
+      <ImageModal closeModal={closeModal} imgUrl={imgUrl} isOpen={isOpen} />
     </div>
   );
 };

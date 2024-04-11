@@ -1,8 +1,13 @@
 import s from "../ImageCard/ImageCard.module.css";
 
-const ImageCard = ({ item }) => {
+const ImageCard = ({ item, openModal }) => {
   return (
-    <li className={s.list}>
+    <li
+      className={s.list}
+      onClick={() => {
+        openModal(item.urls.regular);
+      }}
+    >
       <img
         className={s.image}
         src={item.urls.small}

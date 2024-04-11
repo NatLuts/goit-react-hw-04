@@ -24,8 +24,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: top;
+  padding: 0;
+  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -69,4 +69,9 @@ button:focus-visible {
 
 ul {
   list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
