@@ -8,7 +8,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "#0E385E",
+    backgroundColor: "transparent",
   },
   content: {
     top: "50%",
@@ -27,6 +27,7 @@ const ImageModal = ({ closeModal, isOpen, imgUrl }) => {
       isOpen={isOpen}
       onRequestClose={closeModal}
       style={customStyles}
+      ariaHideApp={false}
       contentLabel="Example Modal"
     >
       <div className={s.modal}>

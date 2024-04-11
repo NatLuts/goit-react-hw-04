@@ -46,7 +46,7 @@ const App = () => {
 
   const handleChangeQuery = (queryStr) => {
     setQuery(queryStr);
-    setPage(0);
+    setPage(1);
     setItems([]);
   };
 
@@ -70,9 +70,9 @@ const App = () => {
       <SearchBar onSearch={handleChangeQuery} emptyField={emptyField} />
       {isError && <ErrorMessage />}
       <Toaster />
-      <ImageGallery items={items} openModal={openModal} />
+      {items.length > 0 && <ImageGallery items={items} openModal={openModal} />}
       {isLoading && !isError && <Loader />}
-      {!isLoading && items.length < totalImages && (
+      {items.length > 0 && page < totalImages && !isError && (
         <LoadMoreBtn handleLoadMore={handleLoadMore} />
       )}
       <ImageModal closeModal={closeModal} imgUrl={imgUrl} isOpen={isOpen} />
